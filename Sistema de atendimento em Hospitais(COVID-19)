@@ -8,7 +8,7 @@ atendimento=random.randrange(500)
 if covid=='SIM':
     print(f'Encaminhe o paciente para ala de COVID-19;SENHA:COV{atendimento}')
 elif covid=='NAO' or 'NÃO':
-    print('Encaminhe o paciente para a sala padrão')
+    print(f'ENCAMINHE O PACIENTE PARA A ALA NORMAL')
 else:
     print('Responda a suspeita de covid com SIM ou NÃO')
 
@@ -16,7 +16,7 @@ else:
 if idade >= 65:
     print('Paciente COM prioridade')
 else:
-    genero=input('Digite o gênero do paciente: ').upper()
+    genero=input('Masculino/Feminino: ').upper()
     if genero=='FEMININO' and idade>10:
         gravidez=input('A paciente está grávida? ').upper()
         if gravidez=='SIM':
@@ -25,4 +25,4 @@ else:
             print(f'A {nome} está SEM prioridade,SENHA:A{atendimento}')
     else:
         genero=='MASCULINO'
-        print(f'O {nome} está SEM prioridade e na sala padrão; SENHA:A{atendimento}')
+        print(f'O {nome} está SEM prioridade; SENHA:A{atendimento}')
