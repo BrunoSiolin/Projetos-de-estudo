@@ -17,7 +17,7 @@ if idade >= 65:
     print('Paciente COM prioridade')
 else:
     genero=input('Masculino/Feminino: ').upper()
-    if genero=='FEMININO' and idade>10:
+    if genero=='FEMININO'or'MULHER' and idade>10:
         gravidez=input('A paciente está grávida? ').upper()
         if gravidez=='SIM':
             print(f'A {nome} TEM prioridade,SENHA:PG{atendimento}')
