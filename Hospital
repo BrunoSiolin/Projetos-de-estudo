@@ -1,0 +1,28 @@
+#SISTEMA DE ATENDIMENTO DE HOSPITAL
+nome=input('Digite o nome: ')
+idade=int(input('Digite a idade: '))
+covid=input("Suspeita de COVID-19? ").upper()
+import random
+atendimento=random.randrange(500)
+# SUSPEITA COVID-19
+if covid=='SIM':
+    print('Encaminhe o paciente para ala de COVID-19;SENHA:COV'+str(atendimento))
+elif covid=='NAO' or 'NÃO':
+    print('Encaminhe o paciente para a sala padrão')
+else:
+    print('Responda a suspeita de covid com SIM ou NÃO')
+
+# NÍVEL DE PRIORIDADE
+if idade >= 65:
+    print('Paciente COM prioridade')
+else:
+    genero=input('Digite o gênero do paciente: ').upper()
+    if genero=='FEMININO' and idade>10:
+        gravidez=input('A paciente está grávida? ').upper()
+        if gravidez=='SIM':
+            print('A paciente TEM prioridade,SENHA:PG'+str(atendimento))
+        else:
+            print('A paciente está SEM prioridade,SENHA:A'+str(atendimento))
+    else:
+        genero=='MASCULINO'
+        print('O paciente está SEM prioridade e na sala padrão; SENHA:A'+str(atendimento))
