@@ -1,28 +1,29 @@
-#SISTEMA DE ATENDIMENTO DE HOSPITAL
-nome=input('Digite o nome: ')
-idade=int(input('Digite a idade: '))
-covid=input("Suspeita de COVID-19? ").upper()
+#DADOS
 import random
 atendimento=random.randrange(500)
-# SUSPEITA COVID-19
-if covid=='SIM':
-    print(f'Encaminhe o paciente para ala de COVID-19;SENHA:COV{atendimento}')
-elif covid=='NAO' or 'NÃO':
-    print(f'ENCAMINHE O PACIENTE PARA A ALA NORMAL')
-else:
-    print('Responda a suspeita de covid com SIM ou NÃO')
+nome=input('Digite o nome: ')
+idade=int(input('Digite a idade: '))
+covid=input('Suspeita de Covid-19? ').upper()
+#ALA
+while covid!='SIM' and  covid!='NAO':
+    print('Digite SIM ou NAO, sem acentos.')
+    covid = input('Suspeita de Covid-19? ').upper()
 
-# NÍVEL DE PRIORIDADE
-if idade >= 65:
-    print('Paciente COM prioridade')
+if covid=="SIM":
+    print('Encaminhe o paciente para ala de COVID-19')
 else:
-    genero=input('Masculino/Feminino: ').upper()
-    if genero=='FEMININO'or'MULHER' and idade>10:
-        gravidez=input('A paciente está grávida? ').upper()
+    print('Encaminhe o paciente para ala COMUM')
+
+# SENHA
+if idade >= 65:
+    print(f'SENHA:PI0{atendimento}')
+else:
+    genero=input("FEMININO/MASCULINO: ").upper()
+    if genero=='FEMININO' and idade>10:
+        gravidez=input("A paciente está grávida? ").upper()
         if gravidez=='SIM':
-            print(f'A {nome} TEM prioridade,SENHA:PG{atendimento}')
+            print(f'A {nome} tem prioridade,SENHA:PG0{atendimento}')
         else:
-            print(f'A {nome} está SEM prioridade,SENHA:A{atendimento}')
+            print(f'A {nome} não tem prioridade,SENHA:G0{atendimento}')
     else:
-        genero=='MASCULINO'
-        print(f'O {nome} está SEM prioridade; SENHA:A{atendimento}')
+        print(f'O {nome} não tem prioridade,SENHA:G0{atendimento}')
