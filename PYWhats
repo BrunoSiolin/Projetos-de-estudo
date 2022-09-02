@@ -2,33 +2,22 @@
 !pip install webdrivermanager
 
 from selenium import webdriver
-import time
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+import time
 
-driver = webdriver.Chrome(ChromeDriverManager().install())
-driver.get('https://web.whatsapp.com/')
-time.sleep(5)
+serv= Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=serv)
+driver.get('https://web.whatsapp.com')
+time.sleep(50)
 
-ctt = ['Batata','Pae']
-msg = 'Test Python'
-
-def buscar_contato(ctt):
-  c_pesq = driver.find_element_by_xpath('//div[contains(@class,"copyable-text selectable-text")]')
-  time.sleep(2)
-  c_pesq.click()
-  campo_pesquisa.send_keys(ctt)
-  c_pesq.send_keys(Keys.ENTER)
-
-def env_msg(msg):
-    c_msg = driver.find_elements_by_xpath('//div[contains(@class,"copyable-text selectable-text")]')
-    c_msg[1].click()
-    time.sleep(2)
-    c_msg[1].send_keys(msg)
-    c_msg[1].send_keys(Keys.ENTER)
-
-
-
-for contato in ctt:
-  buscar_contato(ctt)
-  env_msg(msg)
+driver.find_element('xpath',
+                    '//*[@id="side"]/div[1]/div/div/div[2]/div/div[2]').send_keys('batata')
+driver.find_element('xpath',
+                    '')
+driver.find_element('xpath',
+                    '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]/p').send_keys('test python')
+driver.find_element('xpath',
+                    '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button/span').click()
