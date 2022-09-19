@@ -13,11 +13,11 @@ driver = webdriver.Chrome(service=serv)
 driver.get('https://web.whatsapp.com')
 time.sleep(50)
 
+time.sleep(10)
 driver.find_element('xpath',
-                    '//*[@id="side"]/div[1]/div/div/div[2]/div/div[2]').send_keys('batata')
+                    '//*[@id="side"]/div[1]/div/div/div[2]/div/div[2]').send_keys(ctt).key_down(Keys+ENTER)
+time.sleep(10)
 driver.find_element('xpath',
-                    '')
-driver.find_element('xpath',
-                    '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]/p').send_keys('test python')
+                    '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]/p').send_keys(mensagem)
 driver.find_element('xpath',
                     '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button/span').click()
