@@ -1,0 +1,95 @@
+import subprocess
+import sys
+import tkinter as tk
+from tkinter import simpledialog
+import pywhatkit as kit
+import datetime
+
+# Função para coletar valores permitindo ponto e vírgula
+def ask_float_with_comma(title, prompt):
+    value = simpledialog.askstring(title, prompt)
+    if value:
+        value = value.replace(",", ".")  # Substitui vírgula por ponto
+        try:
+            return float(value)
+        except ValueError:
+            print(f"Erro ao converter '{value}' para número.")
+            return ask_float_with_comma(title, prompt)  # Pergunta novamente se falhar
+    return 0.0
+
+# Função para coletar o período
+def coletar_periodo():
+    root = tk.Tk()
+    root.withdraw()  
+    data_inicio = simpledialog.askstring("Entrada", "Digite a data de início (DD/MM/YYYY):")
+    data_fim = simpledialog.askstring("Entrada", "Digite a data de fim (DD/MM/YYYY):")
+    return data_inicio, data_fim
+
+# Função para coletar dados financeiros e produtos
+def coletar_informacoes_adicionais():
+    num_vendas = simpledialog.askinteger("Pergunta", "Quantas vendas foram realizadas no período?")
+    total_vendas = ask_float_with_comma("Pergunta", "Qual o valor total das vendas no período?")
+    contas_a_pagar = ask_float_with_comma("Pergunta", "Qual o valor total das contas a pagar no período?")
+
+    produtos = []
+    for i in range(1, 4):
+        nome = simpledialog.askstring("Produto", f"Qual o nome do {i}º produto mais vendido?")
+        qtd = ask_float_with_comma("Produto", f"Quantos KG de {nome} foram vendidos?")
+        faturamento = ask_float_with_comma("Produto", f"Qual o faturamento do produto {nome}?")
+        valor_medio = faturamento / qtd if qtd > 0 else 0  # Evita divisão por zero
+        produtos.append((nome, qtd, faturamento, valor_medio))
+
+    return num_vendas, total_vendas, contas_a_pagar, produtos
+
+# Coleta de período e dados adicionais
+inicio_semana, fim_semana = coletar_periodo()
+num_vendas, total_vendas, contas_a_pagar, produtos = coletar_informacoes_adicionais()
+
+# Ajustando o formato das datas para UTF-8
+try:
+    inicio_semana = datetime.datetime.strptime(inicio_semana, "%d/%m/%Y").strftime("%d de %B de %Y")
+    fim_semana = datetime.datetime.strptime(fim_semana, "%d/%m/%Y").strftime("%d de %B de %Y")
+except ValueError as e:
+    print(f"Erro ao formatar a data: {e}")
+    exit(1)
+
+# Processando os dados de vendas
+faturamento_total = total_vendas
+num_vendas_realizadas = num_vendas
+
+# Calculando médias
+media_venda = faturamento_total / num_vendas_realizadas if num_vendas_realizadas > 0 else 0
+media_diaria = faturamento_total / ((datetime.datetime.strptime(fim_semana, "%d de %B de %Y") - datetime.datetime.strptime(inicio_semana, "%d de %B de %Y")).days) if num_vendas_realizadas > 0 else 0
+porcentagem_contas_a_pagar = (contas_a_pagar / faturamento_total) * 100 if faturamento_total > 0 else 0
+
+# Gerando o relatório detalhado
+mensagem = f"""
+📊 *Relatório de Vendas*  
+📅 *Período:* {inicio_semana} a {fim_semana}
+
+💰 *Faturamento Total:* R$ {faturamento_total:,.2f}
+📦 *Vendas Realizadas:* {num_vendas_realizadas}
+💸 *Total de Vendas:* R$ {faturamento_total:,.2f}
+💵 *Média de Vendas por Pedido:* R$ {media_venda:,.2f}
+📆 *Média de Vendas por Dia:* R$ {media_diaria:,.2f}
+
+💼 *Contas a Pagar:* R$ {contas_a_pagar:,.2f}
+💰 *Porcentagem de Contas a Pagar sobre o Faturamento:* {porcentagem_contas_a_pagar:.2f}%
+
+🔝 *Top 3 Produtos da Semana:*
+"""
+
+for i, (nome, qtd, faturamento, valor_medio) in enumerate(produtos, start=1):
+    mensagem += f"""{i}️⃣ {nome}  
+    🔹 *KG vendidos:* {qtd:,.2f} KG  
+    🔹 *Faturamento:* R$ {faturamento:,.2f}  
+    🔹 *Valor médio de venda:* R$ {valor_medio:,.2f}  
+    \n"""
+
+# Número do CEO para envio via WhatsApp
+numero_ceo = "+5511961704438"
+
+# Enviar mensagem pelo WhatsApp
+kit.sendwhatmsg_instantly(numero_ceo, mensagem, wait_time=15)
+
+print("✅ Relatório enviado com sucesso!")
