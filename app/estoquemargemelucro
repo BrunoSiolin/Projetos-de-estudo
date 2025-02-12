@@ -1,0 +1,91 @@
+import tkinter as tk
+from tkinter import messagebox
+
+def calcular_media_ponderada():
+    try:
+        quantidades = list(map(lambda x: float(x.replace(",", ".")), entry_quantidades.get().split(";")))
+        valores = list(map(lambda x: float(x.replace(",", ".")), entry_valores.get().split(";")))
+        
+        if len(quantidades) != len(valores):
+            messagebox.showerror("Erro", "A quantidade de valores deve ser igual à quantidade de entradas.")
+            return
+        
+        custo_total = sum(q * v for q, v in zip(quantidades, valores))
+        quantidade_total = sum(quantidades)
+        
+        if quantidade_total == 0:
+            messagebox.showerror("Erro", "A quantidade total não pode ser zero.")
+            return
+        
+        media_ponderada = custo_total / quantidade_total
+        messagebox.showinfo("Resultado", f"Custo Médio Ponderado: R$ {media_ponderada:.2f} por kg")
+    except ValueError:
+        messagebox.showerror("Erro", "Insira os valores corretamente (separados por ponto e vírgula).")
+
+def calcular_margem_lucro():
+    try:
+        custo_medio = float(entry_custo_medio.get().replace(",", "."))
+        quantidade_vendida = float(entry_quantidade_vendida.get().replace(",", "."))
+        preco_venda = float(entry_preco_venda.get().replace(",", "."))
+        
+        custo_total = custo_medio * quantidade_vendida
+        receita_total = preco_venda * quantidade_vendida
+        lucro_bruto = receita_total - custo_total
+        margem_lucro = (lucro_bruto / receita_total) * 100 if receita_total > 0 else 0
+        
+        resultado = (f"Custo Total: R$ {custo_total:.2f}\n"
+                     f"Receita Total: R$ {receita_total:.2f}\n"
+                     f"Lucro Bruto: R$ {lucro_bruto:.2f}\n"
+                     f"Margem de Lucro: {margem_lucro:.2f}%")
+        
+        messagebox.showinfo("Resultado", resultado)
+    except ValueError:
+        messagebox.showerror("Erro", "Insira os valores corretamente.")
+
+def mostrar_interface(tipo):
+    for widget in frame.winfo_children():
+        widget.destroy()
+    
+    if tipo == "custo_medio":
+        tk.Label(frame, text="Digite as quantidades (separadas por ponto e vírgula):").pack()
+        global entry_quantidades
+        entry_quantidades = tk.Entry(frame)
+        entry_quantidades.pack()
+        
+        tk.Label(frame, text="Digite os valores pagos (separados por ponto e vírgula):").pack()
+        global entry_valores
+        entry_valores = tk.Entry(frame)
+        entry_valores.pack()
+        
+        tk.Button(frame, text="Calcular", command=calcular_media_ponderada).pack()
+    
+    elif tipo == "margem_lucro":
+        tk.Label(frame, text="Digite o custo médio por kg:").pack()
+        global entry_custo_medio
+        entry_custo_medio = tk.Entry(frame)
+        entry_custo_medio.pack()
+        
+        tk.Label(frame, text="Digite a quantidade vendida:").pack()
+        global entry_quantidade_vendida
+        entry_quantidade_vendida = tk.Entry(frame)
+        entry_quantidade_vendida.pack()
+        
+        tk.Label(frame, text="Digite o preço de venda por kg:").pack()
+        global entry_preco_venda
+        entry_preco_venda = tk.Entry(frame)
+        entry_preco_venda.pack()
+        
+        tk.Button(frame, text="Calcular", command=calcular_margem_lucro).pack()
+
+# Criar janela principal
+root = tk.Tk()
+root.title("Gerenciador de Estoque")
+
+tk.Label(root, text="Escolha uma opção:").pack()
+tk.Button(root, text="Custo Médio Ponderado", command=lambda: mostrar_interface("custo_medio")).pack()
+tk.Button(root, text="Margem de Lucro", command=lambda: mostrar_interface("margem_lucro")).pack()
+
+frame = tk.Frame(root)
+frame.pack()
+
+root.mainloop()
