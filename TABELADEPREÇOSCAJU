@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Preços - Castanhas de Caju</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .search-container {
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        .search-input {
+            padding: 8px 30px 8px 10px;
+            font-size: 16px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: gray;
+            pointer-events: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4a460;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Tabela de Preços - Castanhas de Caju</h2>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar produto..." onkeyup="filterTable()">
+        <span class="search-icon">🔍</span>
+    </div>
+
+    <table id="priceTable">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço à Vista (R$)</th>
+                <th>Preço a Prazo (R$)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>CASTANHA DE CAJU ASSADA W1</td><td>500kg</td><td>60,50</td><td>60,96</td></tr>
+            <tr><td>CASTANHA DE CAJU TORRADA W1</td><td>500kg</td><td>60,50</td><td>60,96</td></tr>
+            <tr><td>CASTANHA DE CAJU ASSADA W1</td><td>50kg</td><td>61,25</td><td>61,98</td></tr>
+            <tr><td>CASTANHA DE CAJU TORRADA W1</td><td>50kg</td><td>61,25</td><td>61,98</td></tr>
+            <tr><td>CASTANHA DE CAJU ASSADA W1</td><td>20kg</td><td>62,30</td><td>63,15</td></tr>
+            <tr><td>CASTANHA DE CAJU TORRADA W1</td><td>20kg</td><td>62,30</td><td>63,15</td></tr>
+            <tr><td>CASTANHA DE CAJU ASSADA W1</td><td>10kg</td><td>65,00</td><td>66,18</td></tr>
+            <tr><td>CASTANHA DE CAJU TORRADA W1</td><td>10kg</td><td>65,00</td><td>66,18</td></tr>
+            <tr><td>CASTANHA DE CAJU CARAMELADA</td><td>100kg</td><td>47,77</td><td>48,09</td></tr>
+            <tr><td>CASTANHA DE CAJU CARAMELADA</td><td>20kg</td><td>48,56</td><td>49,38</td></tr>
+            <tr><td>CASTANHA DE CAJU CARAMELADA</td><td>10kg</td><td>50,00</td><td>51,20</td></tr>
+            <tr><td>BANDA CAJU W1</td><td>500kg</td><td>49,00</td><td>49,70</td></tr>
+            <tr><td>BANDA CAJU W1</td><td>100kg</td><td>51,00</td><td>51,73</td></tr>
+            <tr><td>BANDA CAJU W1</td><td>50kg</td><td>52,00</td><td>52,82</td></tr>
+            <tr><td>BANDA CAJU W1</td><td>20kg</td><td>53,78</td><td>54,69</td></tr>
+            <tr><td>BANDA CAJU W1</td><td>10kg</td><td>55,00</td><td>56,13</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        function filterTable() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("priceTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0]; // Filtra pelo nome do produto
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }       
+            }
+        }
+    </script>
+
+</body>
+</html>
