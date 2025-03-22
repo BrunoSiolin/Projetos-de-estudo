@@ -9,7 +9,8 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 50px;
-            background-color: #f8f8f8;
+            background-color: transparent;
+            margin: 0;
         }
 
         .btn-whatsapp {
@@ -20,21 +21,31 @@
             font-weight: bold;
             padding: 15px 30px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 50px; /* Arredondando as pontas do botão */
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Efeito 3D */
             transition: 0.3s;
         }
 
         .btn-whatsapp:hover {
             background-color: #1ebe5d;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Efeito mais forte no hover */
+            transform: translateY(-2px); /* Levanta um pouco o botão */
+        }
+
+        .btn-whatsapp:active {
+            transform: translateY(2px); /* Efeito de pressionar o botão */
         }
     </style>
 </head>
 <body>
 
     <h2>📦 Faça seu pedido aqui!</h2>
-    <a class="btn-whatsapp" href="https://wa.me/5511994235899?text=Olá,%20gostaria%20de%20fazer%20um%20pedido!" target="_blank">
+    
+    <a class="btn-whatsapp" href="https://wa.me/5511994235899?text=Olá%20FLS,%20vim%20pelo%20site%20e%20gostaria%20de%20fazer%20um%20pedido%20de%20Castanha%20de%20Caju!" target="_blank">
         Enviar mensagem
     </a>
 
 </body>
 </html>
+
